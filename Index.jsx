@@ -8,9 +8,10 @@ export default function PlaidLink({ linkToken, onEvent, onExit, onSuccess }) {
   let webviewRef = useRef();
 
   const handleNavigationStateChange = (event) => {
+    console.log("event url: ", event.url);
     if (event.url.startsWith("plaidlink://")) {
       const eventParams = queryString.parse(event.url.replace(/.*\?/, ""));
-
+console.log("eventParams: ", eventParams);
       const linkSessionId = eventParams.link_session_id;
       const mfaType = eventParams.mfa_type;
       const requestId = eventParams.request_id;
@@ -79,6 +80,10 @@ export default function PlaidLink({ linkToken, onEvent, onExit, onSuccess }) {
     return true;
   };
 
+  const onMessage = (event) => {
+    console.log("onMessage: ", event.nativeEvent.data);
+  };
+
   return (
     <WebView
       source={{
@@ -90,8 +95,9 @@ export default function PlaidLink({ linkToken, onEvent, onExit, onSuccess }) {
       }}
       ref={(ref) => (webviewRef = ref)}
       onError={() => webviewRef.reload()}
-      originWhitelist={["https://*", "plaidlink://*"]}
+      originWhitelist={["https://*", "plaidlink://*", "propertypros://*"]}
       onShouldStartLoadWithRequest={handleNavigationStateChange}
+      onMessage={onMessage}
     />
   );
 }

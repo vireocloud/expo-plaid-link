@@ -26,8 +26,8 @@
   },
   "peerDependencies": {
     "react": "16.x",
-    "expo": "43.x",
-    "react-native": "0.64.x",
+    "expo": "^43.x",
+    "react-native": "0.68.x",
     "react-native-webview": "11.x"
   }
 }
